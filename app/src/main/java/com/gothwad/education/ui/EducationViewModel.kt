@@ -10,10 +10,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.gothwad.education.data.GrixRepository
+import com.gothwad.education.data.EducationRepository
 import com.gothwad.education.data.NotificationItem
 import com.gothwad.education.data.OfflineDraft
-import com.gothwad.education.utils.GrixNotificationHelper
+import com.gothwad.education.utils.EducationNotificationHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -21,9 +21,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class GrixViewModel(
+class EducationViewModel(
     application: Application,
-    private val repository: GrixRepository
+    private val repository: EducationRepository
 ) : AndroidViewModel(application) {
 
     private val connectivityManager =
@@ -156,7 +156,7 @@ class GrixViewModel(
     fun triggerLocalNotification(title: String, message: String) {
         viewModelScope.launch {
             repository.saveNotification(title, message)
-            GrixNotificationHelper.showNotification(getApplication(), title, message)
+            EducationNotificationHelper.showNotification(getApplication(), title, message)
         }
     }
 
@@ -174,14 +174,14 @@ class GrixViewModel(
 }
 
 // Custom ViewModel Factory
-class GrixViewModelFactory(
+class EducationViewModelFactory(
     private val application: Application,
-    private val repository: GrixRepository
+    private val repository: EducationRepository
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(GrixViewModel::class.java)) {
-            return GrixViewModel(application, repository) as T
+        if (modelClass.isAssignableFrom(EducationViewModel::class.java)) {
+            return EducationViewModel(application, repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

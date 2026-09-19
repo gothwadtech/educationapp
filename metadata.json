@@ -1,6 +1,6 @@
 {
-  "name": "GrixChat",
-  "description": "Offline-cached GrixChat messaging client with push notifications support.",
+  "name": "Gothwad Education",
+  "description": "Offline-cached Gothwad Education client with push notifications support.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

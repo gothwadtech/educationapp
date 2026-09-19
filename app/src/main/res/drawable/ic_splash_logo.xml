@@ -23,7 +23,7 @@
         android:fillColor="#FFFFFF"
         android:pathData="M87,66h26v3.5h-26z M87,75h18v3.5h-18z" />
 
-    <!-- 4. Dynamic Typography "GrixChat" at the lower half -->
+    <!-- 4. Dynamic Typography "Gothwad Education" at the lower half -->
     <group>
         <!-- 'G' - x=67 to 76 -->
         <path

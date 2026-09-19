@@ -16,29 +16,29 @@ import androidx.core.view.WindowCompat
 import android.app.Activity
 
 private val DarkColorScheme = darkColorScheme(
-    primary = GrixPrimary,
-    secondary = GrixSecondary,
-    tertiary = GrixAccent,
-    background = GrixDarkBackground,
-    surface = GrixSurfaceDark,
-    surfaceVariant = GrixSurfaceCard,
-    onPrimary = GrixDarkBackground,
-    onSecondary = GrixDarkBackground,
-    onBackground = GrixLightBackground,
-    onSurface = GrixLightBackground
+    primary = EducationPrimary,
+    secondary = EducationSecondary,
+    tertiary = EducationAccent,
+    background = EducationDarkBackground,
+    surface = EducationSurfaceDark,
+    surfaceVariant = EducationSurfaceCard,
+    onPrimary = EducationDarkBackground,
+    onSecondary = EducationDarkBackground,
+    onBackground = EducationLightBackground,
+    onSurface = EducationLightBackground
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = GrixPrimaryLight,
-    secondary = GrixSecondaryLight,
-    tertiary = GrixAccent,
-    background = GrixLightBackground,
-    surface = GrixSurfaceLight,
-    surfaceVariant = GrixSurfaceCardLight,
-    onPrimary = GrixSurfaceLight,
-    onSecondary = GrixSurfaceLight,
-    onBackground = GrixDarkBackground,
-    onSurface = GrixDarkBackground
+    primary = EducationPrimaryLight,
+    secondary = EducationSecondaryLight,
+    tertiary = EducationAccent,
+    background = EducationLightBackground,
+    surface = EducationSurfaceLight,
+    surfaceVariant = EducationSurfaceCardLight,
+    onPrimary = EducationSurfaceLight,
+    onSecondary = EducationSurfaceLight,
+    onBackground = EducationDarkBackground,
+    onSurface = EducationDarkBackground
 )
 
 @Composable
