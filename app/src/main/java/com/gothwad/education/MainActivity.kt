@@ -43,13 +43,13 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.gothwad.education.data.GrixDatabase
-import com.gothwad.education.data.GrixRepository
-import com.gothwad.education.ui.GrixViewModel
-import com.gothwad.education.ui.GrixViewModelFactory
-import com.gothwad.education.ui.GrixJavascriptInterface
+import com.gothwad.education.data.EducationDatabase
+import com.gothwad.education.data.EducationRepository
+import com.gothwad.education.ui.EducationViewModel
+import com.gothwad.education.ui.EducationViewModelFactory
+import com.gothwad.education.ui.EducationJavascriptInterface
 import com.gothwad.education.ui.theme.MyApplicationTheme
-import com.gothwad.education.utils.GrixNotificationHelper
+import com.gothwad.education.utils.EducationNotificationHelper
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,11 +81,11 @@ class MainActivity : ComponentActivity() {
         }
 
         // Create the notification channels on launch
-        GrixNotificationHelper.createNotificationChannel(applicationContext)
+        EducationNotificationHelper.createNotificationChannel(applicationContext)
 
         // Setup repository
-        val database = GrixDatabase.getDatabase(applicationContext)
-        val repository = GrixRepository(database.grixDao())
+        val database = EducationDatabase.getDatabase(applicationContext)
+        val repository = EducationRepository(database.educationDao())
 
         // Fetch Real Firebase token asynchronously on launch
         try {
@@ -94,7 +94,7 @@ class MainActivity : ComponentActivity() {
                     val options = com.google.firebase.FirebaseOptions.Builder()
                         .setApplicationId("1:1234567890:android:e1234567890abcdef") // Fallback placeholder
                         .setApiKey("placeholder-api-key-to-allow-init")
-                        .setProjectId("grixchatlite-placeholder")
+                        .setProjectId("gothwadeducation-placeholder")
                         .build()
                     com.google.firebase.FirebaseApp.initializeApp(applicationContext, options)
                 }
@@ -109,7 +109,7 @@ class MainActivity : ComponentActivity() {
                     if (task.isSuccessful) {
                         val token = task.result
                         android.util.Log.d("MainActivity", "Successfully retrieved initial FCM token: $token")
-                        val sharedPrefs = getSharedPreferences("grix_prefs", android.content.Context.MODE_PRIVATE)
+                        val sharedPrefs = getSharedPreferences("education_prefs", android.content.Context.MODE_PRIVATE)
                         sharedPrefs.edit().putString("fcm_token", token).apply()
                     } else {
                         android.util.Log.w("MainActivity", "Fetching FCM registration token failed", task.exception)
@@ -121,11 +121,11 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            val grixViewModel: GrixViewModel = viewModel(
-                factory = GrixViewModelFactory(application, repository)
+            val educationViewModel: EducationViewModel = viewModel(
+                factory = EducationViewModelFactory(application, repository)
             )
 
-            val isDarkThemeOverride by grixViewModel.isDarkThemeOverride.collectAsStateWithLifecycle()
+            val isDarkThemeOverride by educationViewModel.isDarkThemeOverride.collectAsStateWithLifecycle()
             val systemIsDark = isSystemInDarkTheme()
             val useDarkTheme = isDarkThemeOverride ?: systemIsDark
 
@@ -134,7 +134,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GrixChatScreen(viewModel = grixViewModel, isDarkTheme = useDarkTheme)
+                    EducationScreen(viewModel = educationViewModel, isDarkTheme = useDarkTheme)
                 }
             }
         }
@@ -143,7 +143,7 @@ class MainActivity : ComponentActivity() {
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun GrixChatScreen(viewModel: GrixViewModel, isDarkTheme: Boolean) {
+fun EducationScreen(viewModel: EducationViewModel, isDarkTheme: Boolean) {
     val context = LocalContext.current
     val isOnline by viewModel.isOnline.collectAsStateWithLifecycle()
     val isError by viewModel.isWebViewError.collectAsStateWithLifecycle()
@@ -369,8 +369,8 @@ fun GrixChatScreen(viewModel: GrixViewModel, isDarkTheme: Boolean) {
                                                         } catch(e) {}
                                                     }
                                                     
-                                                    if (window.GrixApp && window.GrixApp.setTheme) {
-                                                        window.GrixApp.setTheme(isDark);
+                                                    if (window.EducationApp && window.EducationApp.setTheme) {
+                                                        window.EducationApp.setTheme(isDark);
                                                     }
                                                 }
                                                 
@@ -467,8 +467,8 @@ fun GrixChatScreen(viewModel: GrixViewModel, isDarkTheme: Boolean) {
 
                                 // Inject JS push notification / token channel to match website capabilities
                                 addJavascriptInterface(
-                                    GrixJavascriptInterface(ctx, viewModel),
-                                    "GrixApp"
+                                    EducationJavascriptInterface(ctx, viewModel),
+                                    "EducationApp"
                                 )
 
                                 loadUrl(viewModel.targetUrl)
@@ -522,7 +522,7 @@ fun GrixChatScreen(viewModel: GrixViewModel, isDarkTheme: Boolean) {
                         },
                         modifier = Modifier
                             .fillMaxSize()
-                            .testTag("grix_webview_panel")
+                            .testTag("education_webview_panel")
                     )
 
                     // Elegantly fade-out loading spinner overlay on page transitions

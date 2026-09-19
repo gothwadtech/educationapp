@@ -2,36 +2,36 @@ package com.gothwad.education.data
 
 import kotlinx.coroutines.flow.Flow
 
-class GrixRepository(private val grixDao: GrixDao) {
+class EducationRepository(private val educationDao: EducationDao) {
 
-    val allOfflineDrafts: Flow<List<OfflineDraft>> = grixDao.getAllOfflineDrafts()
-    val allNotifications: Flow<List<NotificationItem>> = grixDao.getAllNotifications()
+    val allOfflineDrafts: Flow<List<OfflineDraft>> = educationDao.getAllOfflineDrafts()
+    val allNotifications: Flow<List<NotificationItem>> = educationDao.getAllNotifications()
 
     suspend fun saveOfflineDraft(content: String, recipient: String = "General") {
-        grixDao.insertOfflineDraft(OfflineDraft(content = content, recipient = recipient))
+        educationDao.insertOfflineDraft(OfflineDraft(content = content, recipient = recipient))
     }
 
     suspend fun deleteOfflineDraft(draft: OfflineDraft) {
-        grixDao.deleteOfflineDraft(draft)
+        educationDao.deleteOfflineDraft(draft)
     }
 
     suspend fun clearAllDrafts() {
-        grixDao.clearAllDrafts()
+        educationDao.clearAllDrafts()
     }
 
     suspend fun saveNotification(title: String, message: String) {
-        grixDao.insertNotification(NotificationItem(title = title, message = message))
+        educationDao.insertNotification(NotificationItem(title = title, message = message))
     }
 
     suspend fun markNotificationAsRead(id: Int) {
-        grixDao.markNotificationAsRead(id)
+        educationDao.markNotificationAsRead(id)
     }
 
     suspend fun deleteNotification(id: Int) {
-        grixDao.deleteNotification(id)
+        educationDao.deleteNotification(id)
     }
 
     suspend fun clearAllNotifications() {
-        grixDao.clearAllNotifications()
+        educationDao.clearAllNotifications()
     }
 }

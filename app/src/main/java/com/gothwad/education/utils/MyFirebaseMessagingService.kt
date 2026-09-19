@@ -1,8 +1,8 @@
 package com.gothwad.education.utils
 
 import android.util.Log
-import com.gothwad.education.data.GrixDatabase
-import com.gothwad.education.data.GrixRepository
+import com.gothwad.education.data.EducationDatabase
+import com.gothwad.education.data.EducationRepository
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.CoroutineScope
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    private val tag = "GrixFCMService"
+    private val tag = "EducationFCMService"
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     /**
@@ -23,8 +23,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(token)
         Log.d(tag, "Refreshed FCM Token: $token")
         
-        // Save the token locally so Javascript can fetch it via window.GrixApp.getPushToken()
-        val sharedPrefs = getSharedPreferences("grix_prefs", MODE_PRIVATE)
+        // Save the token locally so Javascript can fetch it via window.EducationApp.getPushToken()
+        val sharedPrefs = getSharedPreferences("education_prefs", MODE_PRIVATE)
         sharedPrefs.edit().putString("fcm_token", token).apply()
     }
 
@@ -50,7 +50,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
-        val finalTitle = title ?: "GrixChat Message"
+        val finalTitle = title ?: "Gothwad Education Message"
         val finalBody = body ?: "You have received a new message."
 
         Log.d(tag, "Displaying notification: Title=$finalTitle, Body=$finalBody")
@@ -59,14 +59,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         saveNotificationToLocalDb(finalTitle, finalBody)
 
         // 3. Show native system notification banner
-        GrixNotificationHelper.showNotification(applicationContext, finalTitle, finalBody)
+        EducationNotificationHelper.showNotification(applicationContext, finalTitle, finalBody)
     }
 
     private fun saveNotificationToLocalDb(title: String, message: String) {
         serviceScope.launch {
             try {
-                val db = GrixDatabase.getDatabase(applicationContext)
-                val repository = GrixRepository(db.grixDao())
+                val db = EducationDatabase.getDatabase(applicationContext)
+                val repository = EducationRepository(db.educationDao())
                 repository.saveNotification(title, message)
             } catch (e: Exception) {
                 Log.e(tag, "Failed to persist notification in Room DB", e)

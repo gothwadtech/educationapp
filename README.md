@@ -8,25 +8,36 @@
 ![Architecture](https://img.shields.io/badge/Architecture-MVVM%20%2B%20Clean-FF6F00?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=for-the-badge)
 
-**A modern, offline-first Android messaging client built with Jetpack Compose, Material 3, Room Database, and Firebase Cloud Messaging.**
+**A modern, offline-first Android education app built with Jetpack Compose, WebView, Room Database, and Firebase Cloud Messaging.**
 
-[Features](#-key-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [CI/CD & Releases](#-cicd--signing-secrets) • [Architecture](#-architecture)
+[App Identity](#-app-identity) • [Overview](#-overview) • [Tech Stack](#-tech-stack) • [Project Structure](#-project-structure) • [Getting Started](#-getting-started) • [CI/CD & Releases](#-cicd--signing-secrets)
 
 </div>
 
 ---
 
+## 🪪 App Identity
+
+| Property | Value |
+| :--- | :--- |
+| **App Name** | Gothwad Education |
+| **Application ID** | `com.gothwad.education` |
+| **JS Bridge** | `window.EducationApp` |
+
+---
+
 ## 📱 Overview
 
-**GrixChat** is an open-source Android messaging and communication app designed for fluid performance, offline reliability, and clean aesthetics. It integrates native Jetpack Compose interfaces with advanced WebView caching mechanisms, local Room database persistence, and Firebase Push Notifications.
+**Gothwad Education** is an open-source, offline-first Android education app designed for fluid performance, offline reliability, and clean aesthetics. It wraps the education web platform in a native WebView shell with advanced offline caching mechanisms (ServiceWorker + WebView cache), persists drafts and notification history in a local Room database, and delivers real-time updates through Firebase Cloud Messaging (FCM) push notifications. A JavaScript bridge (`window.EducationApp`) lets the web client interact with native Android capabilities such as push tokens, offline drafts, toasts, and dark-mode sync.
 
 ---
 
 ## ✨ Key Features
 
 - 🎨 **Material 3 & Edge-to-Edge**: Modern UI design following the latest Material Design 3 guidelines, dynamic theming with dark mode support, and seamless edge-to-edge drawing.
-- ⚡ **Offline-First Reliability**: Integrated Room Database along with WebView ServiceWorker caching ensuring fast load times and uninterrupted offline experience.
-- 🔔 **Push Notifications**: Full Firebase Cloud Messaging (FCM) integration with custom Android notification channels for background and heads-up alerts.
+- ⚡ **Offline-First Reliability**: Integrated Room Database along with WebView ServiceWorker caching ensuring fast load times and an uninterrupted offline experience.
+- 🔔 **Push Notifications**: Full Firebase Cloud Messaging (FCM) integration with a custom Android notification channel for background and heads-up alerts.
+- 🔗 **Native JS Bridge**: `window.EducationApp` exposes push-token access, offline-draft saving, toasts, online status, and theme synchronization to the web client.
 - 🔄 **Modern State Management**: MVVM architecture utilizing Kotlin Coroutines, `StateFlow`, and `collectAsStateWithLifecycle`.
 - 🛡️ **Automated CI/CD Workflows**: Fully automated GitHub Actions for building signed Release APKs, Play Store AAB bundles, and multi-platform distribution packages with strict secret validation.
 
@@ -38,9 +49,9 @@
 | :--- | :--- |
 | **Language** | Kotlin 2.x |
 | **UI Framework** | Jetpack Compose (BOM), Material 3, Accompanist |
+| **Web Container** | Android WebView with ServiceWorker offline caching + `window.EducationApp` JS bridge |
 | **Architecture** | MVVM (Model-View-ViewModel) + Repository Pattern |
-| **Local Storage** | Room Database + SQLite, Android Keystore |
-| **Networking & API**| Retrofit, OkHttp 4, Moshi (Kotlin codegen) |
+| **Local Storage** | Room Database + SQLite (`EducationDatabase` / `EducationDao` / `EducationRepository`) |
 | **Push Notifications** | Firebase Cloud Messaging (FCM) |
 | **Build System** | Gradle 9.3.1 (Kotlin DSL), Android Gradle Plugin (AGP) |
 | **Testing** | Robolectric, Roborazzi, JUnit 4, AndroidX Test |
@@ -50,7 +61,7 @@
 ## 📂 Project Structure
 
 ```text
-GrixChat/
+Gothwad Education/
 ├── .github/
 │   └── workflows/
 │       ├── build.yml          # Build & Sign APK / AAB on push to main
@@ -59,13 +70,23 @@ GrixChat/
 │   ├── src/
 │   │   ├── main/
 │   │   │   ├── assets/        # App assets & graphics
-│   │   │   ├── java/com/gothwad/grixchat/
-│   │   │   │   ├── data/      # Room Database, DAO, Repository
-│   │   │   │   ├── ui/        # Compose Screens, ViewModels, Theme
-│   │   │   │   └── utils/     # FCM Service, Notification Helpers
+│   │   │   ├── java/com/gothwad/education/
+│   │   │   │   ├── MainActivity.kt              # Activity, WebView shell, permissions
+│   │   │   │   ├── data/
+│   │   │   │   │   ├── EducationDao.kt          # Room DAO (offline drafts, notifications)
+│   │   │   │   │   ├── EducationDatabase.kt     # Room database singleton
+│   │   │   │   │   └── EducationRepository.kt   # Repository pattern facade
+│   │   │   │   ├── ui/
+│   │   │   │   │   ├── EducationViewModel.kt    # ViewModel + factory
+│   │   │   │   │   ├── EducationJavascriptInterface.kt  # window.EducationApp JS bridge
+│   │   │   │   │   └── theme/                   # Compose theme (Color, Theme, Type)
+│   │   │   │   └── utils/
+│   │   │   │       ├── EducationNotificationHelper.kt   # Notification channels & banners
+│   │   │   │       └── MyFirebaseMessagingService.kt    # FCM service (tokens + messages)
 │   │   │   ├── res/           # Layouts, mipmaps, drawables, strings
 │   │   │   └── AndroidManifest.xml
-│   │   └── test/              # Local JVM and Robolectric unit tests
+│   │   ├── test/              # Local JVM and Robolectric unit tests
+│   │   └── androidTest/       # Instrumented tests
 │   ├── build.gradle.kts       # App module configuration & dependencies
 │   └── proguard-rules.pro     # ProGuard / R8 rules
 ├── gradle/
@@ -73,6 +94,7 @@ GrixChat/
 │   └── wrapper/               # Gradle wrapper executable & properties
 ├── build.gradle.kts           # Root build configuration
 ├── settings.gradle.kts        # Project settings & plugin resolution
+├── .env.example               # Environment template (TARGET_URL)
 └── README.md                  # Documentation
 ```
 
@@ -90,8 +112,8 @@ GrixChat/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/GrixChat.git
-   cd GrixChat
+   git clone https://github.com/gothwadtech/educationapp.git
+   cd educationapp
    ```
 
 2. **Setup environment variables:**

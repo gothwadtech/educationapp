@@ -10,19 +10,19 @@ import androidx.room.RoomDatabase
     version = 1,
     exportSchema = false
 )
-abstract class GrixDatabase : RoomDatabase() {
-    abstract fun grixDao(): GrixDao
+abstract class EducationDatabase : RoomDatabase() {
+    abstract fun educationDao(): EducationDao
 
     companion object {
         @Volatile
-        private var INSTANCE: GrixDatabase? = null
+        private var INSTANCE: EducationDatabase? = null
 
-        fun getDatabase(context: Context): GrixDatabase {
+        fun getDatabase(context: Context): EducationDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    GrixDatabase::class.java,
-                    "grixchat_database"
+                    EducationDatabase::class.java,
+                    "gothwad_education_database"
                 )
                 .fallbackToDestructiveMigration(dropAllTables = true)
                 .build()
