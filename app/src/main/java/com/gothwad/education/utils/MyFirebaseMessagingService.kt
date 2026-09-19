@@ -1,8 +1,8 @@
-package com.gothwad.grixchat.utils
+package com.gothwad.education.utils
 
 import android.util.Log
-import com.gothwad.grixchat.data.GrixDatabase
-import com.gothwad.grixchat.data.GrixRepository
+import com.gothwad.education.data.GrixDatabase
+import com.gothwad.education.data.GrixRepository
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.CoroutineScope

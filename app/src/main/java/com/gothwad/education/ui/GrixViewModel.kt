@@ -1,4 +1,4 @@
-package com.gothwad.grixchat.ui
+package com.gothwad.education.ui
 
 import android.app.Application
 import android.content.Context
@@ -10,10 +10,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.gothwad.grixchat.data.GrixRepository
-import com.gothwad.grixchat.data.NotificationItem
-import com.gothwad.grixchat.data.OfflineDraft
-import com.gothwad.grixchat.utils.GrixNotificationHelper
+import com.gothwad.education.data.GrixRepository
+import com.gothwad.education.data.NotificationItem
+import com.gothwad.education.data.OfflineDraft
+import com.gothwad.education.utils.GrixNotificationHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,7 +30,7 @@ class GrixViewModel(
         application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     // Target web resource loaded dynamically from environment configuration
-    val targetUrl = com.gothwad.grixchat.BuildConfig.TARGET_URL
+    val targetUrl = com.gothwad.education.BuildConfig.TARGET_URL
 
     // Backing flows for states
     private val _isOnline = MutableStateFlow(true)

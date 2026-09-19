@@ -1,4 +1,4 @@
-package com.gothwad.grixchat.ui.theme
+package com.gothwad.education.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

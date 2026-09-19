@@ -1,4 +1,4 @@
-package com.gothwad.grixchat.data
+package com.gothwad.education.data
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
