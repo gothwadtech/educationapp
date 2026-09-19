@@ -1,8 +1,8 @@
-package com.gothwad.grixchat
+package com.gothwad.education
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
-import com.gothwad.grixchat.ui.theme.MyApplicationTheme
+import com.gothwad.education.ui.theme.MyApplicationTheme
 import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Rule

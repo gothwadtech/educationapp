@@ -1,4 +1,4 @@
-package com.gothwad.grixchat
+package com.gothwad.education
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -43,13 +43,13 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.gothwad.grixchat.data.GrixDatabase
-import com.gothwad.grixchat.data.GrixRepository
-import com.gothwad.grixchat.ui.GrixViewModel
-import com.gothwad.grixchat.ui.GrixViewModelFactory
-import com.gothwad.grixchat.ui.GrixJavascriptInterface
-import com.gothwad.grixchat.ui.theme.MyApplicationTheme
-import com.gothwad.grixchat.utils.GrixNotificationHelper
+import com.gothwad.education.data.GrixDatabase
+import com.gothwad.education.data.GrixRepository
+import com.gothwad.education.ui.GrixViewModel
+import com.gothwad.education.ui.GrixViewModelFactory
+import com.gothwad.education.ui.GrixJavascriptInterface
+import com.gothwad.education.ui.theme.MyApplicationTheme
+import com.gothwad.education.utils.GrixNotificationHelper
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

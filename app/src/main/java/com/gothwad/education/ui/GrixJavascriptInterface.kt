@@ -1,4 +1,4 @@
-package com.gothwad.grixchat.ui
+package com.gothwad.education.ui
 
 import android.content.Context
 import android.util.Log

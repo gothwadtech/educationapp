@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-  namespace = "com.gothwad.grixchat"
+  namespace = "com.gothwad.education"
   compileSdk = 35
 
   defaultConfig {
-    applicationId = "com.gothwad.grixchat"
+    applicationId = "com.gothwad.education"
     minSdk = 23
     targetSdk = 35
     versionCode = 1
