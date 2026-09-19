@@ -1,4 +1,4 @@
-# GrixChat 🚀
+# Gothwad Education
 
 <div align="center">
 
